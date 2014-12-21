@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,11 +28,9 @@ public class ClusterUserSearch
 		//The folder should have files in some sort of alphanumeric ordering because they will
 		//be sorted by name
 		//
-		//String local output file name to be created in folderpath folder
+		//String local output file path
 		//Integer of the number of Files to search through in the directory.
-		//Integer of the number of lines in each file that are headers
-		//Integer corresponding to the column number of the userIDs starting from 0
-		
+				
 		if(folderPath.lastIndexOf('/') != folderPath.length()-1) {
 			folderPath = folderPath + "/";
 		}
@@ -151,7 +150,7 @@ public class ClusterUserSearch
         stream = new BufferedReader(new FileReader(file));
         
         while((line = stream.readLine())!= null) {
-        	userid = line.split("\\s+")[0];
+        	userid = line.split(",")[0];
         	if((userval = map.get(userid)) != null)
         		map.put(userid, ++userval);
         	else
@@ -172,15 +171,18 @@ public class ClusterUserSearch
 		output.createNewFile();
 		
         streamout = new BufferedWriter(new FileWriter(fileout));
+        
+        /* Adds a header to file
         writebuffer = new StringBuilder("UserID");
         writebuffer.append("\t");
-        for(int i=0; i<numfiles; i++){
+        for(int i=1; i<=numfiles; i++){
         	writebuffer.append("Cluster");
         	writebuffer.append(i);
         	writebuffer.append("\t");
         }
         writebuffer.append("\n");
         streamout.write(writebuffer.toString());
+        */
         
         for(String user: userlist.keySet())
         {
@@ -208,7 +210,7 @@ public class ClusterUserSearch
         HashMap<String,Integer> userlist;
         HashMap<String,Integer> map;
         
-        maplist = new ArrayList<HashMap<String,Integer>>();
+        maplist = new ArrayList<HashMap<String,Integer>>(numfiles);
         userlist = new HashMap<String,Integer>();
         for(int i=0; i<numfiles; i++)
         {
@@ -225,8 +227,49 @@ public class ClusterUserSearch
         writeOut(userlist, maplist);
     }
     
+    public static void splitClusterFile(String f, int numclusters) throws IOException
+    {
+    	//NOT FINISHED!!!!!!!!!!!!!!!!
+    	HashMap<Integer,String> clustermap;
+    	Integer cluster;
+    	BufferedReader streamin;
+    	String line;
+    	String[] linelist;
+    	StringBuffer newline;
+     	
+    	File file = new File(f);
+    	if(!file.exists()){
+    		throw new InvalidParameterException();
+    	}
+    	
+    	clustermap = new HashMap<Integer, String>(1000);
+    	streamin = new BufferedReader(new FileReader(file));
+    	streamin.readLine(); //get rid of header
+    	while((line = streamin.readLine())!= null){
+    		newline = new StringBuffer();
+    		linelist = line.split(",");
+    		try{
+    			cluster = Integer.parseInt(linelist[linelist.length-1]);
+    		}catch(NumberFormatException e){
+    			throw new NumberFormatException();
+    		}
+    		for(int i=0; i<linelist.length-1; i++){
+    			
+    		}
+    		if(clustermap.get(cluster)==null){
+    			//clustermap.put(cluster,Arrays.copyOfRange(linelist, 0, linelist.length-2));
+    		}
+    		
+    	}
+    	streamin.close();
+    	
+    	
+    }
+    
     public static void main(String[] args) throws IOException
     {
+    	
+    	//Call class with -i = path of folder with clusterfiles, -o = name of output file relative to input folder.
         HashMap<String,String> argmap;
         
         argmap = parser(args);
