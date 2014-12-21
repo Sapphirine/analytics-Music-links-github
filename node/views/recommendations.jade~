@@ -1,0 +1,3 @@
+h3#recommendations_title Here are Your Music Recommendations
+    div#recommendations
+        pre #{recommendations}

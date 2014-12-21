@@ -1,0 +1,39 @@
+extends layout
+
+block content
+    h1#title Music Links: Location Based Music Recommender
+    
+    div#information
+        div#songinfo
+            h3#songinfo_title.title Tracks and Artists in Dataset
+            div#songs
+                pre #{songinfo}
+        div#recommends
+            h3#recommendations_title.title Here are Your Music Recommendations 
+            div#recommendations
+
+        div#recommend
+            form(action='/recommend',method='post')
+                div#numberform.formfield(data-role='fieldcontain')
+                    fieldset(data-role='controlgroup')
+                        label(for='number') Number of Recommendations
+                            br
+                            input(id='number', type='text', value='10', placeholder='', name='number')
+                div#id.formfield(data-role='fieldcontain')
+                    fieldset(data-role='controlgroup')
+                        label(for='id') UserID
+                            br
+                            input(id='recomuserid', type='text', value='321081511', placeholder='', name='id')            
+                div(data-role='fieldcontain')
+                    input(type='button',id='submit', value='Recommend', data-transition='fade', data-theme='c')
+
+    div#addin
+        p Put in form for adding new music preferences
+        br
+
+    div#footer
+        Using Million Tweet Data Set from 
+        a(href='http://www.cp.jku.at/datasets/MMTD/') here
+        
+
+                    
