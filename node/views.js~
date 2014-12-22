@@ -1,12 +1,9 @@
 var userdb = require ('./userdb.js');
 var database = require('./database.js');
 
+
+
 exports.index = function (req, res) {
-    if("geolocation" in navigator) {
-        console.log("geolocation!");
-    } else {
-        console.log("no geolocation");
-    }
     var username = userdb.get_user_name(req.session.id);
     var songinfo = database.get_song_info();
     res.render('index', {title: "Twitter Music Recommender", message: "Hello, world", user:username, songinfo:songinfo});

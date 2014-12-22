@@ -1,14 +1,14 @@
 var userdb = require ('./userdb.js');
 var database = require('./database.js');
-var geoip = require('geoip-lite');
-var ip = request.connection.remoteAddress;
-var geo = geoip.lookup(ip);
+
+
 
 exports.index = function (req, res) {
-    console.log(geo);
     var username = userdb.get_user_name(req.session.id);
     var songinfo = database.get_song_info();
-    res.render('index', {title: "Twitter Music Recommender", message: "Hello, world", user:username, songinfo:songinfo});
+    if(songinfo != "") {
+        res.render('index', {title: "Twitter Music Recommender", user:username, songinfo:songinfo});
+    }
 };
 
 exports.tests = function (req, res) {

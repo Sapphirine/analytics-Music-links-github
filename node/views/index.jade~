@@ -27,9 +27,31 @@ block content
                 div(data-role='fieldcontain')
                     input(type='button',id='submit', value='Recommend', data-transition='fade', data-theme='c')
 
-    div#addin
-        p Put in form for adding new music preferences
-        br
+        div#addin
+            form(action='/add_preference',method='post')
+                div#trackname.formfield(data-role='fieldcontain')
+                    fieldset(data-role='controlgroup')
+                        label(for='trackname') Track Name
+                            br
+                            input(id='track', type='text', value='', placeholder='', name='track')
+                div#id.formfield(data-role='fieldcontain')
+                    fieldset(data-role='controlgroup')
+                        label(for='id') UserID
+                            br
+                            input(id='trackuserid', type='text', value='1', placeholder='', name='trackuserid') 
+                div#longitudeform.formfield(data-role='fieldcontain')
+                    fieldset(data-role='controlgroup')
+                        label(for='longitude') Longitude
+                            br
+                            input(id='longitude', type='text', value='0.0', placeholder='', name='longitude')
+                div#latitudeform.formfield(data-role='fieldcontain')
+                    fieldset(data-role='conrolgroup')
+                        label(for='latitude') Latitude
+                            br
+                            input(id='latitude', type='text', value ='0.0', placeholder='', name='longitude')       
+                div(data-role='fieldcontain')
+                    input(type='button',id='submittrack', value='Submit', data-transition='fade', data-theme='c')
+        
 
     div#footer
         Using Million Tweet Data Set from 

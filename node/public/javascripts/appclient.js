@@ -11,15 +11,14 @@ var myapp = (function(){
 
 
     var submit_track = function() {
-        console.log("submit track");
-        console.log(jQuery('#track').val());
-        console.log(jQuery('#trackuserid').val());
-        socket.emit('add_preference', {track:jQuery('#track').val(), trackid:jQuery('#trackuserid').val()});
+        socket.emit('add_preference', {track:jQuery('#track').val(), trackid:jQuery('#trackuserid').val(),
+                                        longitude:jQuery('#longitude').val(), latitude:jQuery('#latitude').val()});
     };
 
     socket.on('preference_added', function() {
         jQuery('#addin').load('/addin');
     });
+
 
     return {
         init: function() {
