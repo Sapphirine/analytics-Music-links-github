@@ -100,6 +100,20 @@ public class project {
 }
 
 
+
+
+Application Quickstart guide:
+
+From the home directory of the repository
+Go to the bin directory
+	cd bin/
+Run the RecommenderApp.sh file with the command “start”
+	./RecommenderApp.sh start
+Open a web browser and go to http://localhost:3000
+
+
+
+
 File API:
 
 App  <-n  -id>

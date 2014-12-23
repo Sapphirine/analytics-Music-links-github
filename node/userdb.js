@@ -1,3 +1,5 @@
+//Template code to add in a user database to the application
+
 var userhash = { };
 var next_anonymous = 1; 
 
