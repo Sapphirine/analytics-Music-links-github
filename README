@@ -100,5 +100,48 @@ public class project {
 }
 
 
+File API:
 
- 
+App  <-n  -id>
+Driver for the nodejs application. Outputs recommendations.
+	-n <String>: The number of recommendations
+	-id <String>: The user id
+
+Recommendations <-id  -f  -o  -i  -n>
+Generates user recommendations.
+	-id <String>: The user id
+	-f <String>: The path to the user tweet frequencies per cluster.
+	-o <String>:  The path to the recommendation output directory.
+	-i <String>: The path to the cluster directory.
+	-n <String>: The number of recommendations.
+
+TrackIDToName <-i  -t  -a  -o>
+Takes a file with track id and rating and outputs track name and artist name.
+	-i <String>: Path to input file with track ids
+	-t <String>: Path to track database file
+	-a <String>: Path to artist database file
+	-o <String>: Directory to output file with names and artists.
+
+CombineRecommendations <-i  -n>
+Final step in recommender. Takes directory with cluster recommendation files and aggregates them into amount requested.
+	-i <String>: Path to recommendation directory
+	-n <String>: Number of recommendations desired
+
+ClusterUserSearch <-i  -o  -nf>
+Counts and records the number of tweets each user has within each cluster.
+	-i <String>: Path to cluster file directory
+	-o <String>: Path for new output file
+	-nf <String>: number of clusters (number of files in the cluster directory).
+
+GetSongInfo <-t  -a>
+Takes track and artist file paths as input and prints out the name and artist of every song in the database files.
+	-t <String>: Path to track database file
+	-a <String>: Path to artist database file
+
+AddMusic <-cc  -cd  -f  -i  -t>
+Adds a new song preference into the appropriate cluster file and updates the user tweet frequency per cluster. **Does not update the main database file. A recluster would delete these entries**
+	-cc <String>: Path to the file with the cluster centers coordinates
+	-cd <String>: Path to the cluster directory
+	-f <String>: Path to the user tweet frequency per cluster file
+	-i <String>: New entry to the clusterfile. <userid \t track name \t longitude \t latitude>
+	-t <String>: Path to the tracks database file
