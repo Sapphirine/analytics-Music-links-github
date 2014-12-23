@@ -42,6 +42,13 @@ Generates user recommendations.
 	-i <String>: The path to the cluster directory.
 	-n <String>: The number of recommendations.
 
+ClusteridToTweet <-cc -p -t -o>
+Generate tweet dataset combined with a new cluster id colum
+	-cc <String>: The path of the file stored cluster centers 
+	-p <String>: The path of the file stored cluster id 
+	-t <String>: The path to the original tweet dataset
+	-o <String>: The path to new generated tweet file
+
 TrackIDToName <-i  -t  -a  -o>
 Takes a file with track id and rating and outputs track name and artist name.
 	-i <String>: Path to input file with track ids
