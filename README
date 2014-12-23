@@ -1,0 +1,104 @@
+Prerequisite: install mahout
+
+Clustering steps:
+1.export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_67.jdk/Contents/Home
+export PATH=$JAVA_HOME/bin:$PATH
+export MAHOUT_LOCAL=TRUE    //setup locally
+
+2. cd mahout-trunk/bin     //change to the mahout directory
+
+(**all the directories mentioned below are under Music-Links/)
+3. mkdir initpoint       //create a new directory to store initial points
+
+4. ./mahout org.apache.mahout.clustering.conversion.InputDriver -i data/location.csv -o testoutput/vectorfiles -v org.apache.mahout.math.RandomAccessSparseVector     //generate vector files
+
+5. ./mahout kmeans -i testoutput/vectorfiles -o testoutput/kmeans_10 -c initpoint -cd 0.5 -x 100 -cl -k 10 -ow      //do kmeans cluster with 10 clusters, maximum 10 iterations and 0.5 similarity threshold
+
+6. mdfind "final" -onlyin testoutput/kmeans-10-100  //find out the directory with the name  final
+
+7. ./mahout clusterdump -i testoutput/kmeans_10/clusters-8-file -o center_10.txt  //output central points, and input file directory is the result of command 6
+
+8. ./mahout seqdumper -i testoutput/kmeans_10/clusteredPoints/part-m-00000 -o points_10    //output clustering results
+
+9. rm -rf testoutput/vectorfiles   //remove existing file if you want to redo step 4 
+
+
+10.run following java code in eclipse to combine clustering information with tweet dataset
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
+public class project {
+	public static void main(String args[]) throws IOException {
+		int cluster_num=10; //need changed every time
+		File filePath = new File(“Music-Links/testoutput/kmeans_10/center_10"); //
+ 		File filePath2 = new File("Music-Links/testoutput/kmeans_10/points_10); //
+		File filePath3 = new File("Music-Links/data/tweet.txt");
+		FileWriter out=new FileWriter("Music-Links/data/tweet_10.txt"); 
+		BufferedReader br;
+		String s = null;
+		int i=0;
+		int i2=0;
+		String[] sArray=new String[2];
+		String[] sArray1=new String[7];
+		String[] sArray2=new String[6];
+		String[] id = new String[cluster_num]; //store cluster_keys
+		int[] id2 = new int[1048575];
+		
+		
+		try {
+			br = new BufferedReader(new FileReader(filePath));
+			while ((s = br.readLine()) != null) {
+				sArray= s.split("L-");
+				s= sArray[1].replaceAll("\"}","");
+				id[i]=s; 
+				i++;
+			}
+			
+			br = new BufferedReader(new FileReader(filePath2));
+			s = br.readLine(); //delete first three lines
+			s = br.readLine();
+			s = br.readLine();
+     		while ((s = br.readLine()) != null && i2<1048574 ) {
+     			sArray1 =s.split(":");
+				s = sArray1[1];
+				s = s.replaceAll(" ","");
+				//System.out.println(s + "\r\n");  
+				for (i=0; i<cluster_num; i++)
+				{
+					if (id[i].equals(s))
+					{
+						id2[i2]=i;
+						break;
+					}
+				}
+				//System.out.println(id2[i2] + "\r\n");  
+				i2++;
+			}
+     				
+     		i2=0;
+     		br = new BufferedReader(new FileReader(filePath3));
+     		while ((s = br.readLine()) != null  && i2<1048574) {
+     			sArray2= s.split(",");
+				s = sArray2[0]+","+sArray2[1]+","+sArray2[2]+","+id2[i2];
+				out.write(s +"\r\n");
+				i2++;
+     		}
+     		
+     		out.close();	
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+
+
+ 
