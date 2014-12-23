@@ -7,7 +7,7 @@
 			;;
  		start)
 			mkdir -p /tmp/RecommenderApp
-			nodejs ../nodejs/app.js &
+			nodejs ../node/app.js &
 			echo "$!" >> /tmp/RecommenderApp/PID.txt
 			;;
 		help)

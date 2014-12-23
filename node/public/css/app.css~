@@ -37,7 +37,10 @@ height: 480px;
 
 #songs {
 height: inherit;
+background-color: whitesmoke;
 }
+
+
 
 #songinfo pre {
 font-size: 16px;
@@ -67,6 +70,7 @@ text-align: center;
 
 #recommendations {
 height: inherit;
+background-color: whitesmoke;
 }
 
 #recommendations pre {
@@ -92,11 +96,13 @@ display: inline-block;
 }
 
 #numberform.formfield{
-margin-right: 180px;
+margin-top:20px;
+margin-right: 80px;
 }
 
 #recommend #id.formfield{
-margin-right: 100px;
+margin-top: 20px;
+margin-right: 70px;
 }
 
 #footer{

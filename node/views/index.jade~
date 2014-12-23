@@ -51,6 +51,7 @@ block content
                             input(id='latitude', type='text', value ='0.0', placeholder='', name='longitude')       
                 div(data-role='fieldcontain')
                     input(type='button',id='submittrack', value='Submit', data-transition='fade', data-theme='c')
+                p Enter new song preference and location from song list above.
         
 
     div#footer
